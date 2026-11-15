@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pemilihan Ketua & Wakil Ketua Kelas XI RPL 1</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- Dynamic Glowing Background -->
+  <div class="bg-glow-orb-1"></div>
+  <div class="bg-glow-orb-2"></div>
+  <div class="bg-grid-pattern"></div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">🗳️</div>
+        <span>EVOTE XI RPL 1</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-item active">Beranda</a>
+        <a href="visi-misi.html" class="nav-item">Visi & Misi</a>
+        <a href="hasil.html" class="nav-item">Hasil Suara</a>
+        <a href="admin.html" class="nav-item nav-admin-btn">Panel Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="container">
+    <section class="hero-wrapper">
+      <div class="class-badge-pill">
+        <span class="pulse-dot"></span>
+        <span id="voting-status-badge">Sesi Pemilihan Dibuka</span>
+        <span>•</span>
+        <span>Kelas XI RPL 1</span>
+      </div>
+
+      <h1 class="main-title">
+        Pemilihan Ketua & Wakil Ketua Kelas <br>
+        <span class="gradient-text-title">XI Rekayasa Perangkat Lunak 1</span>
+      </h1>
+
+      <p class="sub-desc">
+        Waktunya menentukan nahkoda baru kelas XI RPL 1. 2 Pasangan Calon terbaik siap membawa kelas kita lebih kompak, kreatif, dan berprestasi di bidang teknologi!
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#daftar-paslon" class="btn-modern btn-primary-gradient" style="width: auto; padding: 0.75rem 1.75rem;">
+          🚀 Berikan Hak Suara Sekarang
+        </a>
+        <a href="visi-misi.html" class="btn-modern btn-outline-custom" style="width: auto; padding: 0.75rem 1.5rem;">
+          📖 Pelajari Visi & Misi
+        </a>
+      </div>
+    </section>
+
+    <!-- Stat Banner -->
+    <div class="stats-banner">
+      <div class="stat-item-box">
+        <div class="stat-icon">👨‍💻</div>
+        <div>
+          <div class="stat-label">Total Anggota Kelas</div>
+          <div class="stat-value">26 Siswa</div>
+        </div>
+      </div>
+      <div class="stat-item-box">
+        <div class="stat-icon">📥</div>
+        <div>
+          <div class="stat-label">Suara Masuk</div>
+          <div class="stat-value" id="stat-voted-count">0 / 26</div>
+        </div>
+      </div>
+      <div class="stat-item-box">
+        <div class="stat-icon">📊</div>
+        <div>
+          <div class="stat-label">Partisipasi Kelas</div>
+          <div class="stat-value" id="stat-percentage" style="color: var(--primary);">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert jika sudah vote -->
+    <div id="voted-alert" class="alert-box alert-success" style="text-align: center; font-size: 0.95rem; padding: 1.15rem;">
+      🎉 <strong>Terima Kasih!</strong> Anda telah menggunakan hak suara untuk XI RPL 1.
+    </div>
+
+    <!-- Section Title -->
+    <div class="section-headline" id="daftar-paslon">
+      <h2>Kandidat Pasangan Calon</h2>
+      <p>Silakan pelajari profil masing-masing dan tentukan pilihanmu.</p>
+    </div>
+
+    <!-- 2 Paslon Cards -->
+    <div class="candidates-wrapper">
+      
+      <!-- Paslon 01: Yudistira & Maskhidir -->
+      <article class="candidate-card-modern">
+        <div class="num-badge-floating badge-bg-p1">PASLON 01</div>
+        <div class="paslon-header-banner banner-p1">
+          <div class="avatar-duo-container">
+            <div class="avatar-pair-unit">
+              <div class="avatar-figure">
+                <span class="avatar-fallback">👨‍💻</span>
+              </div>
+              <div class="avatar-pair-name">Yudistira</div>
+              <div class="avatar-role-tag">Calon Ketua</div>
+            </div>
+            <div style="font-size: 1.5rem; color: var(--accent-p1); font-weight: 800;">&</div>
+            <div class="avatar-pair-unit">
+              <div class="avatar-figure">
+                <span class="avatar-fallback">👨‍🎓</span>
+              </div>
+              <div class="avatar-pair-name">Maskhidir</div>
+              <div class="avatar-role-tag">Calon Wakil</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content-body">
+          <div class="candidate-title-duo">
+            <h3>Yudistira & Maskhidir</h3>
+            <p>"Sinergi Coding & Solidaritas Tanpa Batas"</p>
+          </div>
+
+          <div class="preview-box">
+            <div class="preview-title">Cuplikan Visi & Program</div>
+            <p class="preview-text">
+              Mewujudkan XI RPL 1 yang solid, kompak, saling membantu dalam memahami materi pemrograman/projek kejuruan, dan menciptakan suasana kelas yang seru tanpa kubu-kubuan.
+            </p>
+          </div>
+
+          <div class="card-action-duo">
+            <button class="btn-modern btn-primary-gradient btn-vote" data-candidate-id="paslon-1" data-candidate-num="01" data-candidate-name="Yudistira & Maskhidir">
+              🗳️ Beri Suara Paslon 01
+            </button>
+            <a href="visi-misi.html?paslon=1" class="btn-modern btn-outline-custom">
+              📖 Baca Visi & Misi Lengkap
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Paslon 02: Mirza & Salman -->
+      <article class="candidate-card-modern">
+        <div class="num-badge-floating badge-bg-p2">PASLON 02</div>
+        <div class="paslon-header-banner banner-p2">
+          <div class="avatar-duo-container">
+            <div class="avatar-pair-unit">
+              <div class="avatar-figure">
+                <span class="avatar-fallback">👨‍🎓</span>
+              </div>
+              <div class="avatar-pair-name">Mirza</div>
+              <div class="avatar-role-tag" style="color: var(--accent-p2);">Calon Ketua</div>
+            </div>
+            <div style="font-size: 1.5rem; color: var(--accent-p2); font-weight: 800;">&</div>
+            <div class="avatar-pair-unit">
+              <div class="avatar-figure">
+                <span class="avatar-fallback">👨‍💻</span>
+              </div>
+              <div class="avatar-pair-name">Salman</div>
+              <div class="avatar-role-tag" style="color: var(--accent-p2);">Calon Wakil</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content-body">
+          <div class="candidate-title-duo">
+            <h3>Mirza & Salman</h3>
+            <p>"Disiplin, Berprestasi, Nyaman & Inovatif"</p>
+          </div>
+
+          <div class="preview-box">
+            <div class="preview-title">Cuplikan Visi & Program</div>
+            <p class="preview-text">
+              Membangun ruang kelas XI RPL 1 yang tertib, transparan dalam urusan kas & tugas kelompok, serta mendorong seluruh siswa aktif unjuk skill di bidang IT dan teknologi.
+            </p>
+          </div>
+
+          <div class="card-action-duo">
+            <button class="btn-modern btn-primary-gradient btn-vote" style="background: var(--gradient-p2);" data-candidate-id="paslon-2" data-candidate-num="02" data-candidate-name="Mirza & Salman">
+              🗳️ Beri Suara Paslon 02
+            </button>
+            <a href="visi-misi.html?paslon=2" class="btn-modern btn-outline-custom">
+              📖 Baca Visi & Misi Lengkap
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Modal Voting Absen + PIN -->
+  <div class="modal-overlay" id="vote-modal">
+    <div class="modal-dialog">
+      <div class="modal-header-icon">🗳️</div>
+      <h3 style="text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.25rem;">
+        Konfirmasi Suara
+      </h3>
+      <p id="modal-subtitle" style="text-align: center; color: var(--gray-500); font-size: 0.9rem; margin-bottom: 1.25rem;">
+        Anda akan memilih Paslon 01
+      </p>
+
+      <div id="modal-error" class="alert-box alert-danger"></div>
+
+      <form id="vote-form">
+        <div class="form-group">
+          <label for="input-absen">Nomor Absen Siswa (01 - 26)</label>
+          <input type="text" id="input-absen" class="form-control-modern" placeholder="Contoh: 05" maxlength="2" inputmode="numeric" required autocomplete="off">
+          <div class="form-hint">Masukkan 2 digit nomor absen Anda (01 s.d. 26)</div>
+        </div>
+
+        <div class="form-group">
+          <label for="input-pin">PIN Siswa (Pola 1101 - 1126)</label>
+          <input type="password" id="input-pin" class="form-control-modern" placeholder="Contoh: 1105" maxlength="4" inputmode="numeric" required autocomplete="off">
+          <div class="form-hint">Format PIN: 11 + No. Absen Anda (contoh absen 05 = 1105)</div>
+        </div>
+
+        <div class="modal-actions-grid">
+          <button type="button" class="btn-modern btn-outline-custom" id="btn-cancel-vote">Batal</button>
+          <button type="submit" class="btn-modern btn-primary-gradient" id="btn-submit-vote">Kirim Suara</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      &copy; 2026 E-Voting Pemilihan Ketua & Wakil Ketua Kelas XI RPL 1. 1 Siswa = 1 Suara.
+    </div>
+  </footer>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - E-Voting Kelas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- Modern Navbar -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">⚙️</div>
+        <span>PANEL KONTROL PEMILIHAN</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-item">⬅️ Ke Beranda</a>
+        <a href="hasil.html" class="nav-item">Lihat Hasil</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Login Form Section -->
+  <div class="container" id="admin-login-section" style="max-width: 440px; margin-top: 4.5rem;">
+    <div class="detail-card" style="padding: 2.5rem;">
+      <div class="modal-header-icon" style="margin-bottom: 1rem;">🔐</div>
+      <h2 style="text-align: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.35rem;">Login Panitia</h2>
+      <p style="text-align: center; color: var(--gray-500); font-size: 0.9rem; margin-bottom: 1.75rem;">
+        Masukkan PIN Pengurus untuk membuka panel kontrol
+      </p>
+
+      <div id="login-error" class="alert-box alert-danger"></div>
+
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label for="admin-pin">PIN Keamanan Pengurus</label>
+          <input type="password" id="admin-pin" class="form-control-modern" placeholder="Masukkan PIN Admin" required autocomplete="off">
+        </div>
+        <button type="submit" class="btn-modern btn-primary-gradient" style="margin-top: 1rem;">
+          Buka Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Admin Utama -->
+  <main class="container" id="admin-dashboard-section" style="display: none; padding: 2.5rem 1.5rem;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--dark-900);">Panel Manajemen & Quick Count</h1>
+        <p style="color: var(--gray-500);">Kelola status pemungutan suara dan pantau partisipasi 26 siswa.</p>
+      </div>
+      <button id="btn-logout" class="btn-modern btn-outline-custom" style="width: auto; padding: 0.5rem 1.25rem;">
+        🚪 Keluar
+      </button>
+    </div>
+
+    <!-- Kotak Aksi / Tombol Kontrol -->
+    <div class="detail-card" style="padding: 1.75rem; margin-bottom: 2rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 1rem;">⚡ Aksi Cepat Panitia</h3>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+        <button id="btn-toggle-voting" class="btn-modern btn-primary-gradient" style="width: auto;">
+          🔒 Kunci / Tutup Pemilihan
+        </button>
+        <button id="btn-init-database" class="btn-modern btn-outline-custom" style="width: auto;">
+          🔄 Inisialisasi Database (26 Siswa)
+        </button>
+        <button id="btn-reset-votes" class="btn-modern btn-outline-custom" style="width: auto; color: var(--danger); border-color: #fca5a5;">
+          ⚠️ Reset Suara ke 0
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid Monitoring & Hasil -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem;">
+      
+      <!-- Live Quick Count -->
+      <div class="detail-card" style="padding: 1.75rem;">
+        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem;">Grafik Perolehan Suara</h3>
+        <p style="color: var(--gray-500); font-size: 0.85rem; margin-bottom: 1.5rem;">Data realtime terhubung langsung ke Firebase Firestore.</p>
+
+        <!-- Paslon 1 -->
+        <div style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.4rem;">
+            <span>01. Yudistira & Maskhidir</span>
+            <span id="qc-count-1" style="color: var(--accent-p1);">0 Suara (0%)</span>
+          </div>
+          <div class="meter-wrapper" style="height: 18px;">
+            <div id="bar-paslon-1" class="meter-bar badge-bg-p1" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Paslon 2 -->
+        <div style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.4rem;">
+            <span>02. Mirza & Salman</span>
+            <span id="qc-count-2" style="color: var(--accent-p2);">0 Suara (0%)</span>
+          </div>
+          <div class="meter-wrapper" style="height: 18px;">
+            <div id="bar-paslon-2" class="meter-bar badge-bg-p2" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div style="background: var(--gray-100); padding: 1rem; border-radius: var(--radius-md); text-align: center; font-weight: 700; color: var(--dark-800);">
+          Total Suara Masuk: <span id="qc-total-votes" style="color: var(--primary);">0</span> / 26 Siswa
+        </div>
+      </div>
+
+      <!-- Pemantau 26 Siswa -->
+      <div class="detail-card" style="padding: 1.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem;">
+          <h3 style="font-size: 1.2rem; font-weight: 800;">Daftar Presensi Hak Suara</h3>
+          <div class="voter-legend">
+            <span class="legend-item" style="color: #059669;">
+              <span class="legend-dot" style="background: #10b981;"></span> Sudah Memilih
+            </span>
+            <span class="legend-item" style="color: #64748b;">
+              <span class="legend-dot" style="background: #cbd5e1;"></span> Belum Memilih
+            </span>
+          </div>
+        </div>
+        <p style="color: var(--gray-500); font-size: 0.85rem; margin-bottom: 1rem;">
+          Menjaga kerahasiaan: hanya menampilkan status presensi siswa (26 Siswa) tanpa membocorkan paslon pilihan.
+        </p>
+
+        <div class="voter-status-grid" id="voters-grid">
+          <!-- 01 - 26 Voter Chips dirender oleh admin.js -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 E-Voting Pemilihan Ketua & Wakil Ketua Kelas.
+    </div>
+  </footer>
+
+  <script src="firebase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

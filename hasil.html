@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Hasil Akhir Suara - Pemilihan XI RPL 1</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- Dynamic Glowing Background -->
+  <div class="bg-glow-orb-1"></div>
+  <div class="bg-glow-orb-2"></div>
+  <div class="bg-grid-pattern"></div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">🗳️</div>
+        <span>EVOTE XI RPL 1</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-item">Beranda</a>
+        <a href="visi-misi.html" class="nav-item">Visi & Misi</a>
+        <a href="hasil.html" class="nav-item active">Hasil Suara</a>
+        <a href="admin.html" class="nav-item nav-admin-btn">Panel Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem;">
+    
+    <!-- Pemenang Banner Live -->
+    <section class="winner-banner-card" id="winner-banner">
+      <div class="winner-crown">👑</div>
+      <div class="winner-subtitle" id="winner-status-label">Perolehan Suara Terbanyak XI RPL 1</div>
+      <h1 class="winner-names" id="winner-names">
+        Memuat Data Suara...
+      </h1>
+      <div>
+        <div class="winner-stats-pill">
+          <span>Total: <strong id="winner-votes-text">0 Suara</strong></span>
+          <span>•</span>
+          <span id="winner-pct-text">0%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ringkasan Statistik Partisipasi -->
+    <div class="stats-banner" style="margin-bottom: 2.5rem;">
+      <div class="stat-item-box">
+        <div class="stat-icon">👥</div>
+        <div>
+          <div class="stat-label">Total Daftar Pemilih</div>
+          <div class="stat-value">26 Siswa</div>
+        </div>
+      </div>
+      <div class="stat-item-box">
+        <div class="stat-icon">✅</div>
+        <div>
+          <div class="stat-label">Suara Sah Masuk</div>
+          <div class="stat-value" id="hasil-total-masuk">0 Suara</div>
+        </div>
+      </div>
+      <div class="stat-item-box">
+        <div class="stat-icon">⏳</div>
+        <div>
+          <div class="stat-label">Belum Memilih</div>
+          <div class="stat-value" id="hasil-sisa-suara">26 Siswa</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Perbandingan Suara 2 Paslon Card -->
+    <div class="results-grid">
+      
+      <!-- Card Hasil Paslon 01: Yudistira & Maskhidir -->
+      <article class="result-card-box">
+        <div class="result-top">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="result-num-circle badge-bg-p1">01</div>
+            <div>
+              <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark-900);">Yudistira & Maskhidir</h3>
+              <p style="font-size: 0.8rem; color: var(--gray-500);">Paslon 01 (Ketua & Wakil)</p>
+            </div>
+          </div>
+          <div>
+            <div class="result-score-large" id="res-votes-1" style="color: var(--accent-p1);">0</div>
+            <div class="result-score-sub" id="res-pct-1">0%</div>
+          </div>
+        </div>
+
+        <div class="meter-wrapper">
+          <div class="meter-bar badge-bg-p1" id="res-bar-1" style="width: 0%;"></div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--gray-500); line-height: 1.5; margin-top: auto;">
+          "Sinergi Coding & Solidaritas Tanpa Batas XI RPL 1"
+        </p>
+      </article>
+
+      <!-- Card Hasil Paslon 02: Mirza & Salman -->
+      <article class="result-card-box">
+        <div class="result-top">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="result-num-circle badge-bg-p2">02</div>
+            <div>
+              <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark-900);">Mirza & Salman</h3>
+              <p style="font-size: 0.8rem; color: var(--gray-500);">Paslon 02 (Ketua & Wakil)</p>
+            </div>
+          </div>
+          <div>
+            <div class="result-score-large" id="res-votes-2" style="color: var(--accent-p2);">0</div>
+            <div class="result-score-sub" id="res-pct-2">0%</div>
+          </div>
+        </div>
+
+        <div class="meter-wrapper">
+          <div class="meter-bar badge-bg-p2" id="res-bar-2" style="width: 0%;"></div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--gray-500); line-height: 1.5; margin-top: auto;">
+          "Disiplin, Berprestasi, Nyaman & Inovatif XI RPL 1"
+        </p>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 E-Voting Pemilihan Ketua & Wakil Ketua Kelas XI RPL 1.
+    </div>
+  </footer>
+
+  <script src="firebase-config.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      listenToResults();
+    });
+
+    function listenToResults() {
+      db.collection(DB_CANDIDATES).onSnapshot((snapshot) => {
+        let v1 = 0;
+        let v2 = 0;
+
+        snapshot.forEach((doc) => {
+          const d = doc.data();
+          if (doc.id === "paslon-1") v1 = d.votes || 0;
+          if (doc.id === "paslon-2") v2 = d.votes || 0;
+        });
+
+        const total = v1 + v2;
+        const totalVoters = 26;
+        const pct1 = total > 0 ? Math.round((v1 / total) * 100) : 0;
+        const pct2 = total > 0 ? Math.round((v2 / total) * 100) : 0;
+
+        document.getElementById("res-votes-1").textContent = v1;
+        document.getElementById("res-pct-1").textContent = `${pct1}% (${v1} Suara)`;
+        document.getElementById("res-bar-1").style.width = `${pct1}%`;
+
+        document.getElementById("res-votes-2").textContent = v2;
+        document.getElementById("res-pct-2").textContent = `${pct2}% (${v2} Suara)`;
+        document.getElementById("res-bar-2").style.width = `${pct2}%`;
+
+        document.getElementById("hasil-total-masuk").textContent = `${total} Suara`;
+        document.getElementById("hasil-sisa-suara").textContent = `${Math.max(0, totalVoters - total)} Siswa`;
+
+        const winnerNamesEl = document.getElementById("winner-names");
+        const winnerVotesEl = document.getElementById("winner-votes-text");
+        const winnerPctEl = document.getElementById("winner-pct-text");
+        const winnerStatusLabel = document.getElementById("winner-status-label");
+
+        if (total === 0) {
+          winnerNamesEl.textContent = "Belum Ada Suara Masuk";
+          winnerVotesEl.textContent = "0 Suara";
+          winnerPctEl.textContent = "0%";
+          winnerStatusLabel.textContent = "Menunggu Pemilih XI RPL 1";
+        } else if (v1 > v2) {
+          winnerNamesEl.textContent = "Yudistira & Maskhidir";
+          winnerVotesEl.textContent = `${v1} Suara`;
+          winnerPctEl.textContent = `${pct1}%`;
+          winnerStatusLabel.textContent = total >= 26 ? "🏆 Pemenang Terpilih Ketua & Wakil XI RPL 1" : "🔥 Memimpin Perolehan Suara Sementara";
+        } else if (v2 > v1) {
+          winnerNamesEl.textContent = "Mirza & Salman";
+          winnerVotesEl.textContent = `${v2} Suara`;
+          winnerPctEl.textContent = `${pct2}%`;
+          winnerStatusLabel.textContent = total >= 26 ? "🏆 Pemenang Terpilih Ketua & Wakil XI RPL 1" : "🔥 Memimpin Perolehan Suara Sementara";
+        } else {
+          winnerNamesEl.textContent = "Perolehan Suara Imbang";
+          winnerVotesEl.textContent = `${v1} vs ${v2} Suara`;
+          winnerPctEl.textContent = "50% : 50%";
+          winnerStatusLabel.textContent = "⚖️ Hasil Suara Sementara";
+        }
+      }, (err) => {
+        console.warn("Gagal memuat hasil voting:", err);
+      });
+    }
+  </script>
+</body>
+</html>
